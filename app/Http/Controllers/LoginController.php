@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use Session;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -45,9 +46,14 @@ class LoginController extends Controller
             $this->middleware('guest:admin')->except('logout');
     }
 
-     public function showAdminLoginForm()
+    public function showAdminLoginForm()
     {
         return view('auth.login', ['url' => 'admin']);
+    }
+	
+	public function userLogin()
+    {
+        return view('login', ['url' => '']);
     }
 
     public function adminLogin(Request $request)
@@ -62,5 +68,19 @@ class LoginController extends Controller
             return redirect()->intended('/admin');
         }
         return back()->withInput($request->only('email', 'remember'));
+    }
+	public function logout(Request $request) {
+       
+		if(!Auth::guard('admin')->user()){
+			 Auth::logout();
+			 Session::flush();
+			 return redirect('/login');
+		}
+			
+		else{
+			Auth::logout();
+			Session::flush();
+			return redirect('/');
+		}	
     }
 }

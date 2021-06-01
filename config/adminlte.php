@@ -65,7 +65,7 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
     'usermenu_desc' => false,
@@ -230,21 +230,16 @@ return [
         'search' => true,
         'topnav' => true,
 		],
-		[
-			'text' => 'Dashboard',
-			'url'  => '/home',
-			'icon' => 'fas fa-fw fa-home',
-		],
 		['header' => 'account_settings'],
 		[
 			'text' => 'company',
 			'url'  => 'company',
-			'icon' => 'fas fa-fw fa-user',
+			'icon' => 'fas fa-fw fa-building',
 		],
 		[
 			'text' => 'employee',
 			'url'  => 'employee',
-			'icon' => 'fas fa-fw fa-lock',
+			'icon' => 'fas fa-fw fa-user-alt',
 		],
 	],
 

@@ -23,7 +23,9 @@
       <div class="modal-header">
         <h5 class="modal-title" id="formModalLabel"><svg width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
   <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
-</svg> Add Company</h5>
+</svg> Add Company</h5><div class="spinner-grow text-primary ml-2" role="status">
+  <span class="sr-only"></span>
+</div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -61,7 +63,7 @@
 			<input type="url" class="form-control" id="website" name="website" minlength="3" required />
 			<small class="form-text text-muted">Enter Company Website</small>
 		  </div>
-		  <button type="submit" id="btn_sub" class="btn btn-primary"></button>
+		  <button type="submit" id="btn_sub" class="btn btn-primary"> </button>
 		</form>
       </div>
       <div class="modal-footer">
@@ -83,6 +85,9 @@
         </button>
       </div>
       <div class="modal-body">
+	  <div class="spinner-grow text-primary ml-2" role="status">
+  <span class="sr-only"></span>
+</div>
           <div class="row" >
 			  <div class="d-flex justify-content-center col-xl-12"><img id="company_logo" src="" alt="" class="m-5" width="150" height="150"/></div>
 			  <div class="col">
@@ -108,7 +113,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" >Confirmation</h5>
+        <h5 class="modal-title" >Confirmation</h5><div class="spinner-grow text-primary ml-2" role="status">
+  <span class="sr-only"></span>
+</div>
         <button type="button" class="close close_del" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -155,6 +162,7 @@
 let type="";
 let id_delete = "";
 $(function() {
+	 $('.spinner-grow').css('display','none');
 	 $('.content-header').css({"width": "1128px", "background-color": "aliceblue"});
 	 $('.navbar-expand').css({"width": "1128px", "background-color": "aliceblue"});
 	 $('.dropdown-toggle').css({"margin-left": "-150px"});
@@ -234,13 +242,18 @@ $(function() {
 		if(type==="PUT")
 			formData.append('_method', 'PUT');
 		
+		
 		$.ajax({
 			   type: "POST",
 			   url: url,
 			   data: formData, // serializes the form's elements.
+			   beforeSend: function() {
+					$('.spinner-grow').css('display','block');
+			   },
 			   error: function (err) {
 				   let errors = ['Duplicate Email. Please Enter Another Email'];
 				   printErrorMsg(errors);
+				   $('.spinner-grow').css('display','none');
 					
 			   },
 			   success: function(data)
@@ -261,6 +274,7 @@ $(function() {
                         printErrorMsg(data.error);
 
                     }
+					$('.spinner-grow').css('display','none');
 			   },
 			   cache: false,
 			   contentType: false,
@@ -371,6 +385,13 @@ $(function() {
 			data: {
 				"id": parseInt(id) // method and token not needed in data
 			},
+			beforeSend: function() {
+					$('.spinner-grow').css('display','block');
+			},
+			error: function (err) {
+				   $('.spinner-grow').css('display','none');
+					
+			},   
 			success: function (response)
 			{
 				$('#CompanyModalTitle').text(response.data.name);
@@ -379,6 +400,7 @@ $(function() {
 				$('.company_website').html("<a target='_blank' href='"+response.data.website+"'>"+response.data.website+"</a>");
 				let location = "uploads/"+response.data.logo;
 				$('#company_logo').attr('src',location);
+				$('.spinner-grow').css('display','none');
 			},	
 			error: function(xhr) {
 			 console.log(xhr.responseText); // this line will save you tons of hours while debugging
@@ -403,10 +425,18 @@ $(function() {
 			data: {
 				"id": parseInt(id_delete) // method and token not needed in data
 			},
+			beforeSend: function() {
+					$('.spinner-grow').css('display','block');
+			},
+			error: function (err) {
+				   $('.spinner-grow').css('display','none');
+					
+			},
 			success: function (response)
 			{
 				$('.yajra-datatable').DataTable().ajax.reload(null, false );
 				$('.closeDelMdl').trigger('click');
+				$('.spinner-grow').css('display','none');
 			},
 			error: function(xhr) {
 			 console.log(xhr.responseText); // this line will save you tons of hours while debugging

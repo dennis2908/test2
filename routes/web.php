@@ -21,26 +21,25 @@ use App\Http\Controllers\EmployeeController;
 //Auth::routes();
 
 Route::get('/login/admin', [LoginController::class, 'showAdminLoginForm']);
-Route::get('/login/blogger', [LoginController::class,'showBloggerLoginForm']);
-Route::get('/register/admin', [RegisterController::class,'showAdminRegisterForm']);
-Route::get('/register/blogger', [RegisterController::class,'showBloggerRegisterForm']);
-
 Route::post('/login/admin', [LoginController::class,'adminLogin']);
-Route::post('/login/blogger', [LoginController::class,'bloggerLogin']);
-Route::post('/register/admin', [RegisterController::class,'createAdmin']);
-Route::post('/register/blogger', [RegisterController::class,'createBlogger']);
+Route::get('/register/admin', [RegisterController::class,'showAdminRegisterForm']);
 
-Route::group(['middleware' => 'auth:blogger'], function () {
-    Route::view('/blogger', 'blogger');
-});
+Route::get('/login', [LoginController::class,'userLogin'])->name('login');
+Route::post('/register/admin', [RegisterController::class,'createAdmin']);
 
 Route::group(['middleware' => 'auth:admin'], function () {
-    
-    Route::view('/admin', 'admin');
-	
+    //Route::view('/admin', 'admin');
+	Route::get('/admin', [HomeController::class, 'home']);
 	Route::resource('company', CompanyController::class);
 	Route::resource('employee', EmployeeController::class);
 	
+	
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    
+    Route::get('/dashboard', [HomeController::class, 'index']);
+	Route::get('/home', [HomeController::class, 'index']);
 	
 });
 
@@ -48,10 +47,4 @@ Route::get('/',function () {
     return redirect('/login/admin');
 });
 
-Route::get('/dashboard',function () {
-    return redirect('/home');
-});
-
-Route::get('/home', [HomeController::class, 'home']);
-
-Route::get('logout', [LoginController::class,'logout']);
+Route::post('logout', [LoginController::class,'logout']);

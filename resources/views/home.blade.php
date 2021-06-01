@@ -1,24 +1,19 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Profile')
 
 @section('content_header')
-    
-Dashboard
-
+<h1>Hi There</h1>
 @stop
 
 @section('content')
-    
-
-Welcome to this beautiful admin panel.
-
+<p>Hello {{ $user }}, welcome to Admin Panel</p>
 @stop
 
 @section('css')
-    
+<link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 @section('js')
-    
+<script> console.log('Hi!'); </script>
 @stop

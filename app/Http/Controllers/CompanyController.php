@@ -182,7 +182,7 @@ class CompanyController extends Controller
     {
          // delete
         $company = Company::find($id);
-        $company->delete();
+        $company->forceDelete();
 
         return response()->json(['success'=>'Success delete record.']);
     }
