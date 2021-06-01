@@ -180,8 +180,8 @@ $(function() {
             {data: 'website', name: 'website'}
         ],
 		columnDefs: [
-			{ "width": 50, "targets": [0] },
-			{ "width": 600, "targets": [1] },
+			{ "width": 20, "targets": [0] },
+			{ "width": 700, "targets": [1] },
 			{ "width": 100, "targets": [2,4] },
 			{
                 // The `data` parameter refers to the data for the cell (defined by the

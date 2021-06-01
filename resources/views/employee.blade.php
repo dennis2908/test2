@@ -225,7 +225,8 @@ $(function() {
         ],
 		columnDefs: [
 			{ "width": 20, "targets": [0] },
-			{ "width": 200, "targets": [1,2,4] },
+			{ "width": 250, "targets": [1] },
+			{ "width": 150, "targets": [2,3,4] },
 			{
                 // The `data` parameter refers to the data for the cell (defined by the
                 // `data` option, which defaults to the column being worked with, in
