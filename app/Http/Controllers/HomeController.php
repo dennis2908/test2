@@ -18,7 +18,7 @@ class HomeController extends Controller
 	public function home()
     {
 		$user = Auth::guard('admin')->user()->name;
-        return view('home',compact('user'));
+        return view('admin',compact('user'));
     }
 	
 }

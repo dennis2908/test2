@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<p>Hello {{ $user }}, welcome to User Panel</p>
+<p>Hello {{ $user }}, welcome to Admin Panel</p>
 @stop
 
 @section('css')
