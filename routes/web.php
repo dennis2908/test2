@@ -30,6 +30,7 @@ Route::post('/register/admin', [RegisterController::class,'createAdmin']);
 Route::group(['middleware' => 'auth:admin'], function () {
     //Route::view('/admin', 'admin');
 	Route::get('/admin', [HomeController::class, 'home']);
+	Route::get('/quote', [HomeController::class, 'quote']);
 	Route::resource('company', CompanyController::class);
 	Route::resource('employee', EmployeeController::class);
 	

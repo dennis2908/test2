@@ -241,6 +241,11 @@ return [
 			'url'  => 'employee',
 			'icon' => 'fas fa-fw fa-user-alt',
 		],
+		[
+			'text' => 'daily quotes',
+			'url'  => 'quote',
+			'icon' => 'fas fa-fw fa-user-alt',
+		],
 	],
 
     /*

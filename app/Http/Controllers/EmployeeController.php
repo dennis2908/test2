@@ -11,6 +11,8 @@ use Validator;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 use App\Mail\EmailDennis;
+
+use DB;
 class EmployeeController extends Controller
 {
     /**
@@ -21,8 +23,42 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()) {
-            $data = Employee::latest()->selectRaw("CONCAT(first_name,' ',last_name) as full_name,employees.*,companies.name as company_name,companies.logo as company_logo,companies.website as company_website,companies.email as company_email")->join('companies','employees.company_id','=','companies.id')->get();
-            return Datatables::of($data)
+            $data = Employee::latest()->selectRaw("CONCAT(first_name,' ',last_name) as full_name,employees.*,companies.name as company_name,companies.logo as company_logo,companies.website as company_website,companies.email as company_email")->join('companies','employees.company_id','=','companies.id');
+			
+			if ($request->get('s_from') && $request->get('s_to')) {
+					$s_from = $request->get('s_from');
+					$s_to = $request->get('s_to');
+					$where = "employees.created_at >= '$s_from' and employees.created_at <='$s_to'";
+					$data->whereRaw($where);
+			}
+			else if ($request->get('s_from')) {
+				    $s_from = $request->get('s_from');
+					$where = "employees.created_at >= '$s_from'";
+					$data->whereRaw($where);
+			}
+			else if ($request->get('s_to')) {
+				    $from = $request->get('s_to');
+					$where = "employees.created_at <= '$s_to'";
+					$data->whereRaw($where);
+			}
+			if ($request->get('s_email')) {
+				    $s_email = $request->get('s_email');
+					$data->orWhere("employees.email", 'LIKE', "%$s_email%");
+			}
+			if ($request->get('s_company')) {
+				    $s_company = $request->get('s_company');
+					$data->orWhere("companies.name", 'LIKE', "%$s_company%");
+			}
+			if ($request->get('s_firstname')) {
+				    $s_firstname = $request->get('s_firstname');
+					$data->orWhere("first_name", 'LIKE', "%$s_firstname%");
+			}
+			if ($request->get('s_last_name')) {
+				    $s_last_name = $request->get('s_last_name');
+					$data->orWhere("last_name", 'LIKE', "%$s_last_name%");
+			}
+			$data_get = $data->get();
+            return Datatables::of($data_get)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $actionBtn = '<a data-toggle="modal" data-target="#EmployeeModal" href="javascript:void(0)" class="btn btn-info btn-sm"
