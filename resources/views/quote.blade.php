@@ -4,8 +4,13 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
+@if($jsonData)
     <button type="button" onclick="window.location.reload();" data-toggle="modal" data-target="#ModalData" class="btn btn-primary btn-sm">
                  Reload Page</button>
+@else 
+	<button type="button" onclick="window.location.reload();" data-toggle="modal" data-target="#ModalData" class="btn btn-primary btn-sm">
+                 Seems API zenquotes fails, Click Here to Reload Again !!</button>
+@endif
 
 @stop
 
